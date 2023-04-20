@@ -1,4 +1,6 @@
 from django.shortcuts import render
+# Import the Album Model
+from .models import Album
 
 # Views
 # Add this Albums list below the imports

@@ -78,11 +78,7 @@ WSGI_APPLICATION = 'beatsrus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  config('DB_NAME'),
-        'HOST': config('DB_HOST'),
-        'SUPERUSER': config('DB_SUPERUSER'),
-        'PASSWORD': config('DB_PASSWORD'),
-       
+        'NAME':  'beatsrus2',
     }
 }
 
