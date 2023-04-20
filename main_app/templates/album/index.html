@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Album List</h1>
+
+{% for Albums in Album %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ Album.name }}</span>
+      <p>id: {{ album.id }}</p>
+      <p>name: {{ album.description }}</p>
+      <p>album_art: {{ album.album_art }}</p>
+      <p>artist_id: {{ album.artist_id }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
