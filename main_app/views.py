@@ -1,6 +1,9 @@
 from django.shortcuts import render
+
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView 
 # Import the Album Model
-from .models import Album
+from .models import Album, Song
 
 # Views
 # Add this Albums list below the imports
@@ -12,6 +15,24 @@ album = [
   
  
 ]
+
+class AlbumList(ListView):
+  model = Album
+  template_name = 'Albums/index.html'
+
+class AlbumCreate(CreateView):
+  model = Album
+  fields = '__all__'
+
+class AlbumCreate(CreateView):
+  model = Song
+  fields = '__all__'
+
+
+
+    
+    
+
 # Define the home view
 def home(request):
   # Include an .html file extension - unlike when rendering EJS templates
@@ -24,7 +45,9 @@ def about(request):
 
 # Add new view
 def album_index(request):
-  # We pass data to a template very much like we did in Express!
-  return render(request, 'album/index.html', {
-    'album': album
-  })
+  albums = Album.objects.all()
+  return render(request, 'album/index.html', { 'album': albums })
+
+def albums_detail(request, album_id):
+  album = Album.objects.get(id=album_id)
+  return render(request, 'album/detail.html', { 'album': album })
