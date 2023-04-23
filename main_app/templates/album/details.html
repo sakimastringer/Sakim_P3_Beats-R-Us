@@ -2,15 +2,35 @@
 {% block content %}
 
 <h1>Album Details</h1>
-
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ Album.name }}</span>
-    <p>id: {{ album.id }}</p>
-    <p>name: {{ album.description }}</p>
-    <p>album_art: {{ album.album_art }}</p>
-    <p>artist_id: {{ album.artist_id }}</p>
-  </div>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ album.name }}</span>
+        <p>id: {{ album.id }}</p>
+        <p>name: {{ album.name|linebreaks }}</p>
+        <p>album_art: {{ album.album_art }}</p>
+        <p>artist_id: {{ album.artist_id }}</p>
+      </div>
+    </div>
+    <div class="card-action">
+      <a href="{% url 'album_update' album.id %}">Edit</a>
+      <a href="{% url 'album_delete' album.id %}">Delete</a>
+    </div>
+  <div class="col s6">
+    <table class="striped">
+      <thead>
+        <tr><th>song</th><th>genre</th></tr>
+      </thead>
+      <tbody>
+        {% for song in album.song_set.all %}
+          <tr>
+            <td>{{song.genre}}</td>
+            <td>{{song.get_genre_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 </div>
 
-{% endblock %}
+  {% endblock %}

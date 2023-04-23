@@ -22,8 +22,17 @@
                 </ul>
                 <ul class="right">
                     <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'about' %}">View My Album</a></li>
-                    <li><a href="{% url 'albums_create' %}">Details</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'albums_create' %}">Create an Album</a></li>
+                    <li><a href="{% url 'index' %}">View My Album</a></li>
+                    
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+    
+                    {% else %}
+                    <!-- New Sign Up link -->
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -32,11 +41,8 @@
         {% block content %}
         {% endblock %}
     </main>
-
-    </main>
     <footer class="page-footer">
         <div class="right">All Rights Reserved, &copy; 2023 Beats-R-Us &nbsp;</div>
     </footer>
 </body>
-
 </html>

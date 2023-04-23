@@ -20,3 +20,10 @@ footer.page-footer {
 .page-footer {
   background-color: rgb(197, 108, 5);
 }
+
+#logo {
+  text-align: right;
+  height: 100px;
+  width: 100px;
+
+}
