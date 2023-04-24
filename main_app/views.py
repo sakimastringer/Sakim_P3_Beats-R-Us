@@ -1,22 +1,24 @@
+import os
+import uuid
+import boto3
 from django.shortcuts import render, redirect
-# Import the Cat Model
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-# Add the two imports below
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Album, Song
+from .models import Album, Song, Photo
+from .forms import SongForm
 
 
 # Add this Albums list below the imports
-album = [
-    {'id': ''},
-    {'name': ''},
-    {'album_art': ''},
-    {'artist_id': ''}
-]
+# album = [
+#     {'id': ''},
+#     {'name': ''},
+#     {'album_art': ''},
+#     {'artist_id': ''}
+# ]
 # Views
 # Define the home view
 def home(request):
@@ -36,7 +38,9 @@ def album_index(request):
 @login_required
 def albums_detail(request, album_id):
     album = Album.objects.get(id=album_id)
-    return render(request, 'album/details.html', {'album': album})
+    
+    song_form = SongForm()
+    return render(request, 'album/details.html', {'album': album, 'song_form': song_form})
 
 # Implement the index (view all) functionality for an Albums data resource:
 class AlbumList(LoginRequiredMixin, ListView):
@@ -61,8 +65,42 @@ class AlbumUpdate(LoginRequiredMixin, UpdateView):
 
 class AlbumDelete(LoginRequiredMixin, DeleteView):
     model = Album
-    success_url = '/album'
+    success_url = '/albums'
 
+@login_required
+def add_song(request, album_id):
+    form = SongForm(request.POST)
+    if form.is_valid():
+        new_song = form.save(commit=False)
+        new_song.album_id = album_id
+        new_song.user = request.user
+        new_song.save()
+    return redirect('detail', album_id=album_id)
+
+# Add this import to access the env vars
+import os
+
+...
+
+def add_photo(request, album_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            # build the full url string
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            Photo.objects.create(url=url, album_id=album_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('detail', album_id=album_id)
 
 
 def signup(request):

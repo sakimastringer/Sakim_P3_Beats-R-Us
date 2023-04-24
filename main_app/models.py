@@ -20,8 +20,8 @@ class Profile(models.Model):
 class Album(models.Model):
     # Name Model
     name = models.CharField(max_length=100)
-    # Album Art Model that uploads photos folder byt Year, Month Day
-    album_art = models.ImageField(upload_to='main_app/static/photos/%Y/%m/%d/')
+    # Album Art Model
+    album_art = models.ImageField()
     # artist_id = models.ForeignKey()
     # Add the foreign key linking to a user instance
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,8 +47,7 @@ class Song(models.Model):
         choices=GENRES,
         default=GENRES[0][0]
         )   
-    # Create a M:M relationship with album
-    # album = models.ManyToManyField(Album)
+
     # User Model
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -60,5 +59,11 @@ class Song(models.Model):
         return f"{self.get_genre_display()} on {self.name}" 
     
 
-    
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for album_id: {self.album_id} @{self.url}"
+
 
