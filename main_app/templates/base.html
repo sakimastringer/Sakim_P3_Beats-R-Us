@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Beats-R-Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+    <header class="navbar-fixed">
+        
+        <nav>
+            <div class="nav-wrapper">
+                
+                <ul>
+                    
+                    <li><a href="{% url 'home' %}" class="leftbrand-logo">&nbsp;&nbsp;<img class="logo" src="https://i.imgur.com/1hxPXjE.png"></a></li>
+                </ul>
+                <ul class="right">
+                    <li><a class="navlink" href="{% url 'about' %}">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a class="navlink" href="{% url 'albums_create' %}">Create an Album</a></li>
+                    <li><a class="navlink" href="{% url 'index' %}">View My Album</a></li>
+                    
+                    <li><a class="navlink" href="{% url 'logout' %}">Log Out</a></li>
+    
+                    {% else %}
+                    <!-- New Sign Up link -->
+                    <li><a class="navlink" href="{% url 'signup' %}">Sign Up</a></li>
+                    <li><a class="navlink" href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="page-footer">
+        <div class="right">All Rights Reserved, &copy; 2023 Beats-R-Us &nbsp;</div>
+    </footer>
+</body>
+</html>

@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import environ
+
+environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,11 +82,7 @@ WSGI_APPLICATION = 'beatsrus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'beatsrus',
-        'HOST': 'localhost',
-        'SUPERUSER': 'sakimastringer',
-        'PASSWORD': 'Ximina$800',
-       
+        'NAME':  'beatsrus3',
     }
 }
 
@@ -126,3 +127,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_URL = 'static/'
+
+# Add this variable to specify where successful logins should redirect to
+LOGIN_REDIRECT_URL = '/albums/'
+
+# Add this variable to specify where logging out redirects to
+LOGOUT_REDIRECT_URL = '/'
+

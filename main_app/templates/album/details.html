@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Album Details</h1>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ album.name }}</span>
+        <p>id: {{ album.id }}</p>
+        <p>name: {{ album.name|linebreaks }}</p>
+        <p>album_art: {{ album.album_art }}</p>
+        <p>artist_id: {{ album.artist_id }}</p>
+      </div>
+    </div>
+    <div class="card-action">
+      <a href="{% url 'albums_update' album.id %}">Edit</a>
+      <a href="{% url 'albums_delete' album.id %}">Delete</a>
+    </div>
+    <!-- Insert photo markup below this comment -->
+    {% for photo in album.photo_set.all %}
+      <img class="responsive-img card-panel" src="{{photo.url}}">
+    {% empty %}
+      <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+    {% endfor %}
+    <form action="{% url 'add_photo' album.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <br><br>
+      <button type="submit" class="btn">Upload Photo</button>
+    </form>
+  <div class="col s6">
+    <form action="{% url 'add_song' album.id %}" method="POST">
+      {% csrf_token %}
+      {{ song_form.as_p }}
+      <input type="submit" class="btn" value="Add Song">
+    </form>
+    <!-- new markup below -->
+    <br>
+  
+    <table class="striped">
+      <thead>
+        <tr><th>song</th><th>genre</th></tr>
+      </thead>
+      <tbody>
+        {% for song in album.song_set.all %}
+          <tr>
+            <td>{{song.name}}</td>
+            <td>{{song.duration}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+<script>
+  // const dateEl = document.getElementById('id_date');
+  // // M is Materialize's global variable
+  // M.Datepicker.init(dateEl, {
+  //   format: 'yyyy-mm-dd',
+  //   defaultDate: new Date(),
+  //   setDefaultDate: true,
+  //   autoClose: true
+  // });
+</script>
+  {% endblock %}
