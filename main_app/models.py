@@ -21,7 +21,7 @@ class Album(models.Model):
     # Name Model
     name = models.CharField(max_length=100)
     # Album Art Model
-    album_art = models.ImageField()
+    album_art = models.ImageField(blank=True)
     # artist_id = models.ForeignKey()
     # Add the foreign key linking to a user instance
     user = models.ForeignKey(User, on_delete=models.CASCADE)
