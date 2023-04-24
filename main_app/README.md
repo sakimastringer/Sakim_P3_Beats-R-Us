@@ -29,6 +29,7 @@ Future Implementations:
 Zap more bugs
 Adding more CSS
 Adding real Songs
+Inquiry Price Option
 Adding buy/cart feature
 
 Screenshots:

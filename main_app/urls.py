@@ -23,9 +23,6 @@ urlpatterns = [
   path('albums/<int:album_id>/add_song/', views.add_song, name='add_song'),
   path('albums/<int:album_id>/add_photo/', views.add_photo, name='add_photo'),
   path('admin/', admin.site.urls),
-  # # '' represents the "starts with" path
-  # path('', include('main_app.urls')),
-
   path('accounts/signup/', views.signup, name='signup'),
   # include the built-in auth urls for the built-in views
   # path('accounts/', include('django.contrib.auth.urls')),
