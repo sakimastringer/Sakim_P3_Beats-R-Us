@@ -128,7 +128,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
 # Add this variable to specify where successful logins should redirect to
 LOGIN_REDIRECT_URL = '/albums/'
