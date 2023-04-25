@@ -12,6 +12,7 @@ django-heroku = "*"
 django-on-heroku = "*"
 gunicorn = "*"
 package_name = "version"
+python-decouple = "*"
 
 [dev-packages]
 autopep8 = "*"
